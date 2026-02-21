@@ -1,0 +1,567 @@
+:root{
+  --ink:#1f2a3a;
+  --muted:rgba(31,42,58,.65);
+
+  --cream-1:#f7f0e6;
+  --cream-2:#f2e7db;
+
+  --panelTop:#d8ecff;
+  --panelBot:#bfe0ff;
+
+  --card:#ffffff;
+  --stroke:rgba(21,34,52,.12);
+  --shadow: 0 18px 45px rgba(18,34,58,.18);
+
+  --radius-xl:32px;
+  --radius-lg:24px;
+  --radius-md:18px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink);
+
+  /* soft cream mix with hints of blue */
+  background:
+    radial-gradient(900px 520px at 10% 10%, rgba(160,210,255,.25), transparent 60%),
+    radial-gradient(800px 520px at 90% 20%, rgba(120,180,255,.18), transparent 58%),
+    radial-gradient(900px 700px at 50% 110%, rgba(255,255,255,.55), transparent 65%),
+    linear-gradient(180deg, var(--cream-1), var(--cream-2));
+}
+
+/* ---------------- Layout ---------------- */
+.page{
+  min-height:100vh;
+  display:grid;
+  grid-template-rows: auto 1fr;
+  align-items:start;
+}
+
+.hero{
+  text-align:center;
+  padding:42px 18px 14px;
+  pointer-events:none;
+}
+.hero h1{
+  margin:0;
+  font-weight:900;
+  font-size:clamp(40px, 5.2vw, 64px);
+}
+.hero p{
+  margin:10px 0 0;
+  font-weight:650;
+  color:rgba(31,42,58,.70);
+  font-size:clamp(14px, 1.8vw, 18px);
+}
+
+.centerWrap{
+  display:grid;
+  place-items:center;
+  padding: 14px 18px 56px;
+}
+
+.panel, .cardPanel{
+  width:min(1080px, 92vw);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(216,236,255,.92), rgba(191,224,255,.92));
+  border:1px solid rgba(21,34,52,.12);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+.panel-inner{
+  padding:28px;
+}
+
+.panelHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:18px;
+}
+.panelHeader h2{
+  margin:0;
+  font-weight:900;
+  font-size:32px;
+  line-height:1.05;
+}
+.panelHeader .sub{
+  margin-top:6px;
+  font-weight:650;
+  color:rgba(31,42,58,.65);
+}
+
+.linkBtn{
+  border:none;
+  background:transparent;
+  padding:6px 8px;
+  border-radius:12px;
+  font-family:inherit;
+  font-weight:800;
+  color:rgba(31,42,58,.70);
+  text-decoration:underline;
+  cursor:pointer;
+}
+.linkBtn:hover{ color:rgba(31,42,58,.95); }
+
+/* ---------------- Tiles ---------------- */
+.tiles{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px 18px;
+  margin-top: 10px;
+}
+@media (max-width: 860px){
+  .tiles{ grid-template-columns: 1fr; }
+}
+
+.tile{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:16px 18px;
+  border-radius:22px;
+  border:1px solid rgba(21,34,52,.12);
+  box-shadow: 0 12px 26px rgba(18,34,58,.12);
+  cursor:pointer;
+  user-select:none;
+  transition: transform .14s ease, box-shadow .14s ease;
+  background: linear-gradient(135deg, var(--g1), var(--g2));
+  text-align:left;
+}
+.tile:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(18,34,58,.16);
+}
+.tile:active{ transform: translateY(0px) scale(.995); }
+
+.tileText{ display:flex; flex-direction:column; }
+.tileTitle{
+  font-weight:900;
+  font-size:18px;
+  line-height:1.1;
+}
+.tileSub{
+  margin-top:6px;
+  font-weight:650;
+  color:rgba(31,42,58,.68);
+  font-size:14px;
+}
+
+.iconPill{
+  width:42px;height:42px;
+  border-radius:999px;
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(21,34,52,.12);
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+}
+.icon{
+  width:22px;height:22px;
+}
+
+/* ---------------- Footer ---------------- */
+.footerRow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 18px 18px 22px;
+  font-weight:700;
+  color:rgba(31,42,58,.65);
+}
+.footerRowCards{
+  padding-top:0;
+}
+
+/* ---------------- Card view ---------------- */
+.cardView{ display:none; }
+
+.cardsWrap{
+  padding-top: 42px;
+}
+
+.cardHeader{
+  padding:20px 24px 10px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.crumb{
+  font-weight:800;
+  letter-spacing:.9px;
+  font-size:12px;
+  color:rgba(31,42,58,.55);
+  text-transform:uppercase;
+}
+.cardTitle{
+  margin:8px 0 0;
+  font-weight:900;
+  font-size:clamp(28px, 3.2vw, 40px);
+  line-height:1.05;
+}
+.cardSubtitle{
+  margin:10px 0 0;
+  font-weight:650;
+  color:rgba(31,42,58,.65);
+}
+
+.headerBtns{
+  display:flex;
+  gap:10px;
+  margin-top: 10px;
+}
+.iconBtn{
+  width:44px;height:44px;
+  border-radius:14px;
+  border:1px solid rgba(21,34,52,.12);
+  background: rgba(255,255,255,.74);
+  box-shadow: 0 12px 26px rgba(18,34,58,.12);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  transition: transform .14s ease;
+}
+.iconBtn:hover{ transform: translateY(-2px); }
+.iconBtn:active{ transform: translateY(0px) scale(.99); }
+
+/* THIS is the key centring fix:
+   cardStage takes the remaining height inside the panel and centres the card */
+.cardStage{
+  padding: 8px 24px 6px;
+  min-height: 420px;
+  display:grid;
+  place-items:center;
+}
+
+/* Flip card sizing */
+.flipCard{
+  width:min(980px, 100%);
+  border-radius: 28px;
+  perspective: 1400px;
+  position:relative;
+}
+.flipInner{
+  position:relative;
+  width:100%;
+  height: 340px;
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.2,.7,.2,1);
+  border-radius:28px;
+}
+@media (max-width: 680px){
+  .flipInner{ height: 380px; }
+}
+.flipped .flipInner{ transform: rotateY(180deg); }
+
+.face{
+  position:absolute;
+  inset:0;
+  border-radius:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
+  border:1px solid rgba(21,34,52,.10);
+  box-shadow: 0 16px 42px rgba(18,34,58,.12);
+  backface-visibility:hidden;
+
+  /* centre contents in the white card */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  padding: 28px 26px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+}
+
+.faceBack{
+  transform: rotateY(180deg);
+  padding: 28px 26px;
+}
+
+/* centred verse block (so the text doesn't float weirdly top-left) */
+.verseBlock{
+  width:100%;
+  max-width: 78ch;
+  margin: 0 auto;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height: 100%;
+}
+
+.countPill{
+  position:absolute;
+  top:18px; right:18px;
+  padding: 8px 12px;
+  border-radius:999px;
+  background: rgba(255,255,255,.78);
+  border:1px solid rgba(21,34,52,.12);
+  font-weight:900;
+  color:rgba(31,42,58,.70);
+  font-size:14px;
+}
+
+.label{
+  font-weight:900;
+  letter-spacing:2.2px;
+  font-size:12px;
+  color:rgba(31,42,58,.58);
+  margin-bottom:16px;
+}
+.affirmText{
+  font-weight:900;
+  font-size:clamp(28px, 3.4vw, 44px);
+  line-height:1.15;
+  margin:0;
+}
+.tapHint{
+  margin-top:14px;
+  font-weight:750;
+  color:rgba(31,42,58,.55);
+  font-size:14px;
+}
+
+.verse-ref{
+  font-weight:900;
+  font-size: clamp(22px, 2.3vw, 30px);
+  margin: 0 0 14px;
+}
+.verse-text{
+  color:rgba(30,38,51,.82);
+  font-weight:650;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height:1.65;
+  margin:0;
+  text-align:center;
+}
+
+/* Nav buttons */
+.navRow{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  padding: 8px 0 22px;
+}
+.navCircle{
+  width:54px;height:54px;
+  border-radius:999px;
+  border:1px solid rgba(21,34,52,.12);
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 12px 26px rgba(18,34,58,.12);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  transition: transform .14s ease;
+}
+.navCircle:hover{ transform: translateY(-2px); }
+.navCircle:active{ transform: translateY(0px) scale(.99); }
+
+/* ---------------- Note modal ---------------- */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  place-items:center;
+  background: rgba(10,16,26,.25);
+  padding: 18px;
+  z-index: 50;
+}
+.modal{
+  width:min(760px, 92vw);
+  background: rgba(255,255,255,.92);
+  border:1px solid rgba(21,34,52,.12);
+  border-radius: 22px;
+  box-shadow: 0 22px 60px rgba(18,34,58,.24);
+  overflow:hidden;
+}
+.modalTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 14px 16px;
+  background: rgba(216,236,255,.70);
+  border-bottom:1px solid rgba(21,34,52,.10);
+}
+.modalTop .dots{ display:flex; gap:6px; }
+.dot{ width:8px;height:8px;border-radius:999px;background: rgba(31,42,58,.28); }
+.modalTitle{ font-weight:900; margin:0; color: rgba(31,42,58,.78); }
+
+.closeX{
+  width:38px;height:38px;
+  border-radius:999px;
+  border:1px solid rgba(21,34,52,.12);
+  background: rgba(255,255,255,.78);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+}
+.closeX svg{ width:18px;height:18px; }
+
+.modalBody{
+  padding: 18px 18px 16px;
+}
+.modalBody h3{
+  margin:0;
+  font-weight:900;
+  font-size:26px;
+}
+.modalBody p{
+  margin:10px 0 0;
+  font-weight:650;
+  color: rgba(31,42,58,.72);
+  line-height:1.45;
+}
+.noteBox{
+  margin-top:14px;
+  padding: 14px 14px;
+  border-radius:16px;
+  background: rgba(250,244,232,.85);
+  border:1px solid rgba(21,34,52,.10);
+  font-weight:750;
+  color: rgba(31,42,58,.72);
+}
+.checkRow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top: 12px;
+  font-weight:750;
+  color: rgba(31,42,58,.72);
+}
+/* =========================
+   LAYOUT + CENTRING FIXES
+   Paste at END of your CSS
+   ========================= */
+
+/* 1) Creamy background (soft creams + hint of blue), and remove default spacing */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(900px 520px at 20% 12%, rgba(185, 222, 255, 0.55), rgba(0,0,0,0) 60%),
+    radial-gradient(820px 520px at 85% 25%, rgba(255, 233, 214, 0.65), rgba(0,0,0,0) 62%),
+    radial-gradient(900px 620px at 55% 110%, rgba(255, 236, 220, 0.70), rgba(0,0,0,0) 62%),
+    linear-gradient(180deg, #f6efe7 0%, #f4eee6 45%, #f6f1ea 100%);
+}
+
+/* 2) Centre the PAGE contents vertically based on the main panel (not the whole document) */
+#app,
+.app,
+main {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* key: kills the huge empty bottom space */
+  align-items: center;
+  padding: 44px 24px;      /* balanced top/bottom breathing room */
+  box-sizing: border-box;
+}
+
+/* 3) If you have a “home screen” wrapper, this makes it centre by the box */
+.home,
+.home-screen,
+.screen-home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 4) Tighten the title block spacing so it doesn’t push everything down */
+.hero,
+.header,
+.title-block {
+  margin: 0 0 18px 0;
+  text-align: center;
+}
+
+.hero h1,
+.header h1,
+.title-block h1 {
+  margin: 0 0 8px 0;
+}
+
+.hero p,
+.header p,
+.title-block p {
+  margin: 0;
+}
+
+/* 5) The big blue panel (Choose one box): make it smaller + centred + not “too tall” */
+.panel,
+.home-panel,
+.choose-panel,
+.categories-panel {
+  width: min(980px, 92vw);
+  border-radius: 28px;
+  padding: 26px 26px 22px;
+  box-sizing: border-box;
+  margin: 0; /* important: don’t let margins create bottom heaviness */
+}
+
+/* If your panel background is controlled by gradient, keep it subtle */
+.panel,
+.home-panel,
+.choose-panel,
+.categories-panel {
+  background: linear-gradient(180deg, rgba(210, 232, 255, 0.90), rgba(183, 217, 255, 0.85));
+}
+
+/* 6) Ensure the grid of 6 tiles doesn’t stretch the panel unnecessarily */
+.tiles,
+.category-grid,
+.grid {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  gap: 16px;
+}
+
+/* 2 columns on desktop, 1 on small screens */
+@media (min-width: 760px) {
+  .tiles,
+  .category-grid,
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 759px) {
+  .tiles,
+  .category-grid,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 7) Kill any sneaky footer spacing that pushes the page down */
+footer,
+.footer,
+.made-with-love {
+  margin-top: 14px !important;
+  padding-bottom: 0 !important;
+}
+
+/* 8) If anything is forcing extra bottom space, this usually fixes it */
+.spacer,
+.bottom-spacer {
+  display: none !important;
+}

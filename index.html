@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scriptural Affirmations</title>
+
+  <!-- Bubble font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- HOME VIEW -->
+  <main class="page" id="homeView">
+    <header class="hero">
+      <h1>Scriptural Affirmations</h1>
+      <p>Reminders from God, rooted in the Bible.</p>
+    </header>
+
+    <section class="centerWrap" aria-label="Home content">
+      <div class="panel" role="region" aria-label="Categories">
+        <div class="panel-inner">
+          <div class="panelHeader">
+            <div>
+              <h2>Choose one</h2>
+              <div class="sub">Pick what you need right now.</div>
+            </div>
+
+            <button class="linkBtn" id="openNoteBtn" type="button">Open Lizzie’s note</button>
+          </div>
+
+          <div class="tiles">
+            <button class="tile" type="button" data-cat="identity" style="--g1:#d7efff; --g2:#bfe0ff;">
+              <div class="tileText">
+                <div class="tileTitle">Identity / Affirmation</div>
+                <div class="tileSub">For when you forget who you are.</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-identity"></span></span>
+            </button>
+
+            <button class="tile" type="button" data-cat="comfort" style="--g1:#d9e6ff; --g2:#c9d3ff;">
+              <div class="tileText">
+                <div class="tileTitle">Comfort</div>
+                <div class="tileSub">For when everything feels heavy.</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-comfort"></span></span>
+            </button>
+
+            <button class="tile" type="button" data-cat="motivation" style="--g1:#d6e0ff; --g2:#bfcaff;">
+              <div class="tileText">
+                <div class="tileTitle">Motivation / Perseverance</div>
+                <div class="tileSub">For when you are tired and want to give up.</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-motivation"></span></span>
+            </button>
+
+            <button class="tile" type="button" data-cat="service" style="--g1:#d3dcff; --g2:#b9c1ff;">
+              <div class="tileText">
+                <div class="tileTitle">Service / Community</div>
+                <div class="tileSub">For when loving and serving people feels difficult.</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-service"></span></span>
+            </button>
+
+            <button class="tile" type="button" data-cat="guidance" style="--g1:#cfd9ff; --g2:#b2baff;">
+              <div class="tileText">
+                <div class="tileTitle">Guidance / Decision Making</div>
+                <div class="tileSub">For when you don’t know what to do next.</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-guidance"></span></span>
+            </button>
+
+            <button class="tile" type="button" data-cat="random" style="--g1:#c9d2ff; --g2:#aeb4ff;">
+              <div class="tileText">
+                <div class="tileTitle">Random</div>
+                <div class="tileSub">Surprise me (God knows what I need).</div>
+              </div>
+              <span class="iconPill" aria-hidden="true"><span id="icon-random"></span></span>
+            </button>
+          </div>
+        </div>
+
+        <footer class="footerRow">
+          <span>Made with love ♡</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- CARD VIEW -->
+  <main class="page cardView" id="cardView" aria-hidden="true">
+    <section class="centerWrap cardsWrap" aria-label="Card content">
+      <div class="cardPanel" role="region" aria-label="Affirmation cards">
+
+        <header class="cardHeader">
+          <div>
+            <div class="crumb" id="crumbText">HOME / CATEGORY</div>
+            <div class="cardTitle" id="catTitle">Category</div>
+            <div class="cardSubtitle" id="catSubtitle">Subtitle</div>
+          </div>
+
+          <div class="headerBtns">
+            <button class="iconBtn" id="backBtn" type="button" aria-label="Back to categories">
+              <span id="icon-back"></span>
+            </button>
+            <button class="iconBtn" id="randomizeBtn" type="button" aria-label="Randomise (within category)">
+              <span id="icon-dice"></span>
+            </button>
+          </div>
+        </header>
+
+        <!-- This is what gets centred inside the blue panel -->
+        <div class="cardStage">
+          <div class="flipCard" id="flipCard">
+            <div class="countPill" id="countPill">1/21</div>
+
+            <div class="flipInner" id="flipInner">
+              <!-- FRONT -->
+              <div class="face" id="frontFace" title="Click to flip">
+                <div class="label">AFFIRMATION</div>
+                <p class="affirmText" id="affirmText">...</p>
+                <div class="tapHint" id="tapHint">Tap to reveal the verse</div>
+              </div>
+
+              <!-- BACK -->
+              <div class="face faceBack" id="backFace" title="Click to flip back">
+                <div class="verseBlock">
+                  <div class="verse-ref" id="verseRef">...</div>
+                  <p class="verse-text" id="verseText">...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="navRow">
+          <button class="navCircle" id="prevBtn" type="button" aria-label="Previous">
+            <span id="icon-left"></span>
+          </button>
+          <button class="navCircle" id="nextBtn" type="button" aria-label="Next">
+            <span id="icon-right"></span>
+          </button>
+        </div>
+
+        <footer class="footerRow footerRowCards">
+          <span>Made with love ♡</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- NOTE MODAL -->
+  <div class="modalOverlay" id="noteOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="A note for Lizzie">
+      <div class="modalTop">
+        <div class="dots" aria-hidden="true">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="modalTitle">A note for Lizzie</div>
+        <button class="closeX" id="closeNote" type="button" aria-label="Close note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1f2a3a" stroke-width="2.4" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modalBody">
+        <h3>Happy Birthday, Lizzie ♡</h3>
+        <p>I wanted to make you something meaningful because you’ve genuinely been such a comfort to me, especially when I’m stressed or not doing great.
+  Thank you for always showing up with kindness, advice, and patience, even when I’m a mess and don’t know how to explain what I’m feeling.
+  I’m not always the best at affirming people properly, so I thought the best way to say what I mean was to lean on God’s words instead.
+  I hope these reminders make you feel loved, seen, and supported the way you’ve done for me so many times.                                                
+</p>
+<p>
+  With all my love,<br>
+  Angelique
+</p>
+        <div class="noteBox">
+          Note: Tap the card to flip it. Each reminder is rooted in Scripture, and the back shows the Bible verse and reference it comes from.
+        </div>
+
+        <label class="checkRow">
+          <input type="checkbox" id="dontAutoShowNote" />
+          Don’t auto show this note again
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
