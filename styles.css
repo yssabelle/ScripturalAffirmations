@@ -630,3 +630,35 @@ button,
   -webkit-text-fill-color: var(--ink);
   text-decoration: none;
 }
+/* Tile gradient system:
+   - darker as you go down
+   - right column slightly cooler
+*/
+
+/* LEFT column (slightly warmer / less blue) */
+.tile[data-cat="identity"]{
+  --g1:#d7eeff;  /* light */
+  --g2:#c8e1ff;
+}
+.tile[data-cat="motivation"]{
+  --g1:#cfdfff;  /* mid */
+  --g2:#bccfff;
+}
+.tile[data-cat="guidance"]{
+  --g1:#c5d0ff;  /* darkest */
+  --g2:#adb9ff;
+}
+
+/* RIGHT column (slightly cooler / more periwinkle) */
+.tile[data-cat="comfort"]{
+  --g1:#d6e6ff;  /* light but cooler */
+  --g2:#c4d6ff;
+}
+.tile[data-cat="service"]{
+  --g1:#cbd8ff;  /* mid cooler */
+  --g2:#b2c4ff;
+}
+.tile[data-cat="random"]{
+  --g1:#becbff;  /* darkest cooler */
+  --g2:#a4b2ff;
+}
