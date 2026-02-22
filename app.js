@@ -192,10 +192,9 @@ const DATA = {
 
 /* ---------------- State + elements ---------------- */
 const LS = {
-  flippedOnce: "truthbox_flipped_once",
   hideNote: "truthbox_hide_note"
 };
-
+let flippedOnceThisLoad = false;
 let currentCat = null;
 let pool = [];
 let order = [];
@@ -226,9 +225,6 @@ const shuffle = (arr) => {
   }
   return a;
 };
-
-const hasFlippedOnce = () => localStorage.getItem(LS.flippedOnce) === "1";
-const markFlippedOnce = () => localStorage.setItem(LS.flippedOnce, "1");
 
 function setView(view){
   if(view === "home"){
@@ -291,8 +287,7 @@ function renderCard(){
 
   countPill.textContent = `${idx + 1}/${pool.length}`;
 
-  tapHint.style.display = hasFlippedOnce() ? "none" : "block";
-}
+tapHint.style.display = flippedOnceThisLoad ? "none" : "block";}
 
 function openCategory(categoryKey){
   buildPool(categoryKey);
@@ -312,10 +307,10 @@ function toggleFlip(){
   const willFlipToBack = !flipCard.classList.contains("flipped");
   flipCard.classList.toggle("flipped");
 
-  if(willFlipToBack && !hasFlippedOnce()){
-    markFlippedOnce();
-    tapHint.style.display = "none";
-  }
+  if (willFlipToBack && !flippedOnceThisLoad) {
+  flippedOnceThisLoad = true;
+  tapHint.style.display = "none";
+}
 }
 document.getElementById("frontFace").addEventListener("click", toggleFlip);
 document.getElementById("backFace").addEventListener("click", toggleFlip);
