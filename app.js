@@ -11,16 +11,27 @@ const ICONS = {
     <path d="M5 13l.8 2.6L8.5 16l-2.7.8L5 19l-.8-2.2L1.5 16l2.7-.4L5 13z" opacity=".9"></path>
     <path d="M19 13l.8 2.6L22.5 16l-2.7.8L19 19l-.8-2.2L15.5 16l2.7-.4L19 13z" opacity=".9"></path>
   `),
-heart: svg(`
-  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>
-`),
+  heart: svg(`
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"></path>
+  `),
   bolt: svg(`<path d="M13 2L4 14h7l-1 8 10-14h-7l0-6z"></path>`),
-people: svg(`<circle cx="12" cy="7.25" r="3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/><circle cx="5.4" cy="9.15" r="2.3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/><circle cx="18.6" cy="9.15" r="2.3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/><path d="M4 20c.7-3.7 4-6.3 8-6.3s7.3 2.6 8 6.3" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1.8 19.8c.5-2.6 2.6-4.5 5.2-4.8" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.2 19.8c-.5-2.6-2.6-4.5-5.2-4.8" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`),
- question: svg(`
+
+  // NOTE: this MUST be wrapped with svg(...) otherwise it breaks the DOM
+  people: svg(`
+    <circle cx="12" cy="7.25" r="3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/>
+    <circle cx="5.4" cy="9.15" r="2.3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/>
+    <circle cx="18.6" cy="9.15" r="2.3" fill="none" stroke="#1f2a3a" stroke-width="2.2"/>
+    <path d="M4 20c.7-3.7 4-6.3 8-6.3s7.3 2.6 8 6.3" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1.8 19.8c.5-2.6 2.6-4.5 5.2-4.8" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22.2 19.8c-.5-2.6-2.6-4.5-5.2-4.8" fill="none" stroke="#1f2a3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  `),
+
+  question: svg(`
     <path d="M12 18.2h.01"></path>
     <path d="M9.3 9.1a2.9 2.9 0 1 1 4.4 2.5c-.9.6-1.7 1.2-1.7 2.6v.4"></path>
     <path d="M12 2.8a9.2 9.2 0 1 0 0 18.4a9.2 9.2 0 0 0 0-18.4z"></path>
   `),
+
   dice: svg(`
     <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="3.2"></rect>
     <circle cx="8.4" cy="8.4" r="1.15" fill="#1f2a3a" stroke="none"></circle>
@@ -28,6 +39,7 @@ people: svg(`<circle cx="12" cy="7.25" r="3" fill="none" stroke="#1f2a3a" stroke
     <circle cx="8.4" cy="15.6" r="1.15" fill="#1f2a3a" stroke="none"></circle>
     <circle cx="15.6" cy="15.6" r="1.15" fill="#1f2a3a" stroke="none"></circle>
   `),
+
   back: svg(`<path d="M15 18l-6-6 6-6"></path>`),
   left: svg(`<path d="M14.5 18l-6-6 6-6"></path>`),
   right: svg(`<path d="M9.5 6l6 6-6 6"></path>`)
@@ -104,7 +116,6 @@ const DATA = {
     ]
   },
 
-  /* Motivation: unchanged here (if you want to swap this too, paste your 21 and I’ll replace it) */
   motivation: {
     title: "Motivation / Perseverance",
     subtitle: "For when you are tired and want to give up.",
@@ -194,11 +205,14 @@ const DATA = {
 const LS = {
   hideNote: "truthbox_hide_note"
 };
-let flippedOnceThisLoad = false;
+
 let currentCat = null;
 let pool = [];
 let order = [];
 let idx = 0;
+
+// Flip hint should reappear on EVERY page reload
+let flipHintDismissed = false;
 
 const homeView = document.getElementById("homeView");
 const cardView = document.getElementById("cardView");
@@ -287,7 +301,9 @@ function renderCard(){
 
   countPill.textContent = `${idx + 1}/${pool.length}`;
 
-tapHint.style.display = flippedOnceThisLoad ? "none" : "block";}
+  // hint shows until first flip in this page load
+  tapHint.style.display = flipHintDismissed ? "none" : "block";
+}
 
 function openCategory(categoryKey){
   buildPool(categoryKey);
@@ -307,11 +323,13 @@ function toggleFlip(){
   const willFlipToBack = !flipCard.classList.contains("flipped");
   flipCard.classList.toggle("flipped");
 
-  if (willFlipToBack && !flippedOnceThisLoad) {
-  flippedOnceThisLoad = true;
-  tapHint.style.display = "none";
+  // first flip in this session hides the hint
+  if(willFlipToBack && !flipHintDismissed){
+    flipHintDismissed = true;
+    tapHint.style.display = "none";
+  }
 }
-}
+
 document.getElementById("frontFace").addEventListener("click", toggleFlip);
 document.getElementById("backFace").addEventListener("click", toggleFlip);
 
