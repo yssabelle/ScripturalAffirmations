@@ -565,3 +565,30 @@ footer,
 .bottom-spacer {
   display: none !important;
 }
+/* ---- iPhone link-blue fix (tiles + anything inside) ---- */
+
+/* If your tiles are <a class="tile"> ... */
+.tile,
+.tile:link,
+.tile:visited,
+.tile:hover,
+.tile:active,
+.tile:focus {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Force the title + subtext to ignore anchor colouring */
+.tile .tileTitle { color: var(--ink); }
+.tile .tileSub   { color: rgba(31,42,58,.68); }
+
+/* If the title is an <a> inside the tile for some reason */
+.tile a,
+.tile a:link,
+.tile a:visited,
+.tile a:hover,
+.tile a:active,
+.tile a:focus {
+  color: inherit;
+  text-decoration: none;
+}
